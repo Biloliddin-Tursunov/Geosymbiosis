@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import dayjs from "dayjs";
+import LoadingSpinner from "./component/loading";
 
 export default function App() {
   const [events, setEvents] = useState([]);
@@ -25,7 +26,7 @@ export default function App() {
     fetchData();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
 
   // 3 haftaga ajratish
   const week1 = events.filter(

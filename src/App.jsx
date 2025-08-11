@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div className="p-5">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/schedules" element={<Home />} />
         <Route path="/memories" element={<Memories />} />
       </Routes>
     </div>

@@ -1,15 +1,15 @@
 /** @format */
+
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 
 export default function Home() {
   const [scheduleData, setScheduleData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lang, setLang] = useState("uz"); // til tanlash
+  const [lang, setLang] = useState("uz");
 
   useEffect(() => {
     async function fetchData() {
-      // VIEW dan ma'lumotlarni olish
       const { data, error } = await supabase
         .from("schedule_view")
         .select("*")
@@ -20,23 +20,18 @@ export default function Home() {
       if (error) {
         console.error(error);
       } else {
-        // Ma'lumotlarni strukturalashtirish
-        const structuredData = structureScheduleData(data);
-        setScheduleData(structuredData);
+        setScheduleData(structureScheduleData(data));
       }
       setLoading(false);
     }
     fetchData();
   }, []);
 
-  // Ma'lumotlarni hafta -> kun -> eventlar bo'yicha guruhlash
   function structureScheduleData(data) {
     const weeks = {};
-
     data.forEach((row) => {
-      if (!row.week_id) return; // Bo'sh qatorlarni o'tkazib yuborish
+      if (!row.week_id) return;
 
-      // Hafta ma'lumotini yaratish
       if (!weeks[row.week_id]) {
         weeks[row.week_id] = {
           id: row.week_id,
@@ -48,7 +43,6 @@ export default function Home() {
         };
       }
 
-      // Kun ma'lumotini yaratish
       if (row.day_id && !weeks[row.week_id].days[row.day_id]) {
         weeks[row.week_id].days[row.day_id] = {
           id: row.day_id,
@@ -61,7 +55,6 @@ export default function Home() {
         };
       }
 
-      // Event ma'lumotini qo'shish
       if (row.event_id && row.day_id) {
         weeks[row.week_id].days[row.day_id].events.push({
           id: row.event_id,
@@ -86,9 +79,9 @@ export default function Home() {
   }
 
   return (
-    <div className="p-0 lg:p-6 bg-gray-50 min-h-screen font-sans">
+    <div className="bg-gray-50 min-h-screen font-sans">
       {/* Header */}
-      <div className="text-center mb-4 lg:mb-10 px-4 lg:px-0">
+      <div className="text-center mb-4 lg:mb-10 px-4 lg:px-0 pt-4">
         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
           GWS 2025 Schedule
         </h1>
@@ -121,24 +114,26 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Haftalarni ko'rsatish */}
+      {/* Weeks */}
       {scheduleData.map((week) => (
         <div
           key={week.id}
-          className="mb-4 lg:mb-8 bg-white border-0 lg:border border-gray-200 rounded-none lg:rounded-2xl shadow-none lg:shadow-sm p-4 lg:p-5 mx-0">
+          // Mobil va planshet versiyalari uchun to'liq kenglikni ta'minlaydi
+          className="mb-4 lg:mb-8 bg-white border-0 lg:border border-gray-200 rounded-none lg:rounded-2xl shadow-none lg:shadow-sm p-4 lg:p-5 mx-0 sm:mx-0 md:mx-0">
           {/* Week title */}
           <h2 className="text-base lg:text-lg font-semibold text-gray-800 mb-3 lg:mb-4">
             {week[`name_${lang}`]}
           </h2>
 
-          {/* Days grid */}
+          {/* Days */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-5">
             {Object.values(week.days)
               .sort((a, b) => new Date(a.date) - new Date(b.date))
               .map((day) => (
                 <div
                   key={day.id}
-                  className="bg-gray-50 lg:bg-white border-0 lg:border border-gray-200 rounded-lg lg:rounded-xl shadow-none lg:shadow-sm p-3 lg:p-4 hover:shadow-lg transition">
+                  // Mobil va planshet versiyalari uchun to'liq kenglikni ta'minlaydi
+                  className="bg-gray-50 lg:bg-white border-0 lg:border border-gray-200 rounded-none lg:rounded-xl shadow-none lg:shadow-sm p-3 lg:p-4 hover:shadow-lg transition mx-0 sm:mx-0 md:mx-0">
                   {/* Day title */}
                   <div className="text-gray-900 font-medium mb-1 lg:mb-2 text-sm lg:text-base">
                     {day[`name_${lang}`]}
@@ -151,15 +146,16 @@ export default function Home() {
                     })}
                   </div>
 
-                  {/* Events list */}
+                  {/* Events */}
                   <div className="space-y-1 lg:space-y-2">
                     {day.events
                       .sort((a, b) => a.event_order - b.event_order)
                       .map((event) => (
                         <div
                           key={event.id}
-                          className="p-2 lg:p-3 bg-white lg:bg-gray-50 rounded-md lg:rounded-lg border border-gray-100">
-                          <div className="text-xs lg:text-sm text-gray-800 font-medium leading-tight lg:leading-normal">
+                          // Mobil va planshet versiyalari uchun to'liq kenglikni ta'minlaydi
+                          className="p-3 bg-white lg:bg-gray-50 rounded-none lg:rounded-lg border border-gray-100 mx-0 sm:mx-0 md:mx-0">
+                          <div className="text-xs lg:text-sm text-gray-800 font-medium">
                             {event[`activity_${lang}`]}
                           </div>
                           <div className="text-xs text-gray-500 mt-1">

@@ -86,10 +86,10 @@ export default function Home() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen font-sans">
+    <div className="p-0 lg:p-6 bg-gray-50 min-h-screen font-sans">
       {/* Header */}
-      <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">
+      <div className="text-center mb-4 lg:mb-10 px-4 lg:px-0">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
           GWS 2025 Schedule
         </h1>
         <p className="text-gray-700">PROGRAMME SCHEDULE</p>
@@ -125,25 +125,25 @@ export default function Home() {
       {scheduleData.map((week) => (
         <div
           key={week.id}
-          className="mb-8 bg-white border border-gray-200 rounded-2xl shadow-sm p-5">
+          className="mb-4 lg:mb-8 bg-white border-0 lg:border border-gray-200 rounded-none lg:rounded-2xl shadow-none lg:shadow-sm p-4 lg:p-5 mx-0">
           {/* Week title */}
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          <h2 className="text-base lg:text-lg font-semibold text-gray-800 mb-3 lg:mb-4">
             {week[`name_${lang}`]}
           </h2>
 
           {/* Days grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-5">
             {Object.values(week.days)
               .sort((a, b) => new Date(a.date) - new Date(b.date))
               .map((day) => (
                 <div
                   key={day.id}
-                  className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-lg transition">
+                  className="bg-gray-50 lg:bg-white border-0 lg:border border-gray-200 rounded-lg lg:rounded-xl shadow-none lg:shadow-sm p-3 lg:p-4 hover:shadow-lg transition">
                   {/* Day title */}
-                  <div className="text-gray-900 font-medium mb-2">
+                  <div className="text-gray-900 font-medium mb-1 lg:mb-2 text-sm lg:text-base">
                     {day[`name_${lang}`]}
                   </div>
-                  <div className="text-xs text-gray-500 mb-3">
+                  <div className="text-xs text-gray-500 mb-2 lg:mb-3">
                     {new Date(day.date).toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "long",
@@ -152,17 +152,17 @@ export default function Home() {
                   </div>
 
                   {/* Events list */}
-                  <div className="space-y-2">
+                  <div className="space-y-1 lg:space-y-2">
                     {day.events
                       .sort((a, b) => a.event_order - b.event_order)
                       .map((event) => (
                         <div
                           key={event.id}
-                          className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                          <div className="text-sm text-gray-800 font-medium">
+                          className="p-2 lg:p-3 bg-white lg:bg-gray-50 rounded-md lg:rounded-lg border border-gray-100">
+                          <div className="text-xs lg:text-sm text-gray-800 font-medium leading-tight lg:leading-normal">
                             {event[`activity_${lang}`]}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-gray-500 mt-1">
                             {event.time_range}
                           </div>
                         </div>

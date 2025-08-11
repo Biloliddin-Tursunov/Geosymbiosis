@@ -6,14 +6,15 @@ import dayjs from "dayjs";
 export default function Home() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lang, setLang] = useState("uz"); // til tanlash
 
   useEffect(() => {
     async function fetchData() {
       const { data, error } = await supabase
-        .from("events")
+        .from("schedule")
         .select("*")
-        .order("date", { ascending: true })
-        .order("start_time", { ascending: true });
+        .order("event_date", { ascending: true })
+        .order("time_range", { ascending: true });
 
       if (error) {
         console.error(error);
@@ -42,13 +43,13 @@ export default function Home() {
   const weekData = weeks.map((week) => {
     const weekEvents = events.filter(
       (e) =>
-        dayjs(e.date).isAfter(dayjs(week.start).subtract(1, "day")) &&
-        dayjs(e.date).isBefore(dayjs(week.end).add(1, "day"))
+        dayjs(e.event_date).isAfter(dayjs(week.start).subtract(1, "day")) &&
+        dayjs(e.event_date).isBefore(dayjs(week.end).add(1, "day"))
     );
 
     const days = {};
     weekEvents.forEach((event) => {
-      const day = dayjs(event.date).format("DD MMMM");
+      const day = dayjs(event.event_date).format("DD MMMM");
       if (!days[day]) days[day] = [];
       days[day].push(event);
     });
@@ -56,21 +57,40 @@ export default function Home() {
     return { ...week, days };
   });
 
-  const formatTime = (date, time) => {
-    if (!date || !time) return "";
-    const dt = dayjs(`${date}T${time}`);
-    return dt.isValid() ? dt.format("HH:mm") : "";
-  };
-
   return (
     <div className="p-6 bg-gray-50 min-h-screen font-sans">
       {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl font-bold text-gray-900 mb-1">
-          Schedules for GWS 2025
+          GWS 2025 Schedule
         </h1>
         <p className="text-gray-700">PROGRAMME SCHEDULE</p>
-        <p className="italic text-gray-500">GEOSIMBIOTIC WORKSHOP GWS 2025</p>
+        <p className="italic text-gray-500">GEOSYMBIOSIS SUMMER SCHOOL 2025</p>
+
+        {/* Language Switch */}
+        <div className="mt-4 space-x-2">
+          <button
+            onClick={() => setLang("uz")}
+            className={`px-3 py-1 rounded-lg border ${
+              lang === "uz" ? "bg-gray-800 text-white" : "bg-white"
+            }`}>
+            🇺🇿 Uzbek
+          </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`px-3 py-1 rounded-lg border ${
+              lang === "en" ? "bg-gray-800 text-white" : "bg-white"
+            }`}>
+            🇬🇧 English
+          </button>
+          <button
+            onClick={() => setLang("ja")}
+            className={`px-3 py-1 rounded-lg border ${
+              lang === "ja" ? "bg-gray-800 text-white" : "bg-white"
+            }`}>
+            🇯🇵 日本語
+          </button>
+        </div>
       </div>
 
       {weekData.map((week, wi) => (
@@ -89,7 +109,9 @@ export default function Home() {
                 key={day}
                 className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-lg transition">
                 {/* Day title */}
-                <div className="text-gray-900 font-medium mb-2">{day}</div>
+                <div className="text-gray-900 font-medium mb-2">
+                  {week.days[day][0][`day_name_${lang}`]}
+                </div>
 
                 {/* Events list */}
                 <div className="space-y-2">
@@ -98,19 +120,11 @@ export default function Home() {
                       key={event.id}
                       className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                       <div className="text-sm text-gray-800 font-medium">
-                        {event.title}
+                        {event[`activity_${lang}`]}
                       </div>
                       <div className="text-xs text-gray-500">
-                        {formatTime(event.date, event.start_time)}{" "}
-                        {event.end_time
-                          ? `– ${formatTime(event.date, event.end_time)}`
-                          : ""}
+                        {event.time_range}
                       </div>
-                      {event.location && (
-                        <div className="text-xs text-gray-400 mt-1">
-                          📍 {event.location}
-                        </div>
-                      )}
                     </div>
                   ))}
                 </div>

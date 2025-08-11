@@ -154,3 +154,9 @@
   color: #6b7280;
   margin-top: 3px;
 }
+@media (max-width: 767px) {
+  .days {
+    grid-template-columns: 1fr; /* 1 ustun */
+    gap: 10px;
+  }
+}

@@ -1,0 +1,156 @@
+/**
+ * Container
+ *
+ * @format
+ */
+
+.schedule-container {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Loader */
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #333;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 5px;
+}
+
+.header p {
+  color: #4b5563;
+  margin: 0;
+}
+
+.header .italic {
+  font-style: italic;
+  color: #6b7280;
+}
+
+.lang-switch {
+  margin-top: 15px;
+}
+
+.lang-switch button {
+  padding: 6px 12px;
+  margin: 0 5px;
+  border: 1px solid #4b5563;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lang-switch button.active,
+.lang-switch button:hover {
+  background: #1f2937;
+  color: white;
+}
+
+/* Week */
+.week {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.week h2 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #374151;
+  margin-bottom: 15px;
+}
+
+/* Days */
+.days {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 15px;
+}
+
+/* Day */
+.day {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 15px;
+  transition: box-shadow 0.3s ease;
+}
+
+.day:hover {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+.day-title {
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 5px;
+}
+
+.day-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+/* Events */
+.events {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Event */
+.event {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.event-activity {
+  font-weight: 500;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+
+.event-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 3px;
+}

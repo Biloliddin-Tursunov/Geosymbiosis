@@ -164,36 +164,15 @@ body {
     padding: 10px;
   }
 }
-.image-preview-grid {
+.grid-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
-  margin-top: 15px;
 }
 
-.image-preview-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #f0f0f0;
-}
-
-.image-preview-item img {
+.grid-item img {
   width: 100%;
-  height: 100%;
+  height: 200px;
   object-fit: cover;
-}
-
-.image-preview-remove {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  font-size: 14px;
-  cursor: pointer;
+  border-radius: 8px;
 }

@@ -1,5 +1,8 @@
 /** @format */
 
+// Week.jsx
+/** @format */
+
 import Day from "./Day";
 
 export default function Week({ week, lang }) {

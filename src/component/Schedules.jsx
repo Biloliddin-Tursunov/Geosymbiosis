@@ -1,8 +1,8 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { supabase } from "../supabaseClient";
-import Header from "./Header";
+import { LangContext } from "../context/LangContext";
 import Week from "./Week";
 import Loading from "./Loading";
 import "../styles/style.css";
@@ -10,7 +10,7 @@ import "../styles/style.css";
 export default function Schedule() {
   const [scheduleData, setScheduleData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [lang, setLang] = useState("uz");
+  const { lang } = useContext(LangContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -80,7 +80,6 @@ export default function Schedule() {
 
   return (
     <div>
-      <Header lang={lang} setLang={setLang} />
       {scheduleData.map((week) => (
         <Week key={week.id} week={week} lang={lang} />
       ))}

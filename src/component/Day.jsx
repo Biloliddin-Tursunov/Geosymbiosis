@@ -10,16 +10,16 @@ export default function Day({ day, lang }) {
   });
 
   return (
-    <div className="day">
-      <div className="day-title">{day[`name_${lang}`]}</div>
-      <div className="day-date">{formattedDate}</div>
+    <article className="day">
+      <h3>{day[`name_${lang}`]}</h3>
+      <p>{formattedDate}</p>
       <div className="events">
         {day.events
           .sort((a, b) => a.event_order - b.event_order)
           .map((event) => (
-            <Event key={event.id} event={event} lang={lang} />
+            <Event key={event.id} event={event} day={day} lang={lang} />
           ))}
       </div>
-    </div>
+    </article>
   );
 }

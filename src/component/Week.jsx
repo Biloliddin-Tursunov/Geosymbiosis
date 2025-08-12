@@ -4,7 +4,7 @@ import Day from "./Day";
 
 export default function Week({ week, lang }) {
   return (
-    <div className="week">
+    <section className="week">
       <h2>{week[`name_${lang}`]}</h2>
       <div className="days">
         {Object.values(week.days)
@@ -13,6 +13,6 @@ export default function Week({ week, lang }) {
             <Day key={day.id} day={day} lang={lang} />
           ))}
       </div>
-    </div>
+    </section>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import Header from "./Header";
 import Week from "./Week";
+import Loading from "./Loading";
 import "../styles/style.css";
 
 export default function Schedule() {
@@ -34,6 +35,7 @@ export default function Schedule() {
     const weeks = {};
     data.forEach((row) => {
       if (!row.week_id) return;
+
       if (!weeks[row.week_id]) {
         weeks[row.week_id] = {
           id: row.week_id,
@@ -44,6 +46,7 @@ export default function Schedule() {
           days: {},
         };
       }
+
       if (row.day_id && !weeks[row.week_id].days[row.day_id]) {
         weeks[row.week_id].days[row.day_id] = {
           id: row.day_id,
@@ -55,6 +58,7 @@ export default function Schedule() {
           events: [],
         };
       }
+
       if (row.event_id && row.day_id) {
         weeks[row.week_id].days[row.day_id].events.push({
           id: row.event_id,
@@ -66,19 +70,16 @@ export default function Schedule() {
         });
       }
     });
+
     return Object.values(weeks).sort((a, b) => a.number - b.number);
   }
 
   if (loading) {
-    return (
-      <div className="loader">
-        <div className="spinner"></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
-    <div className="schedule-container">
+    <div>
       <Header lang={lang} setLang={setLang} />
       {scheduleData.map((week) => (
         <Week key={week.id} week={week} lang={lang} />

@@ -9,7 +9,7 @@ export default function Header({ lang, setLang }) {
         <h1>GWS 2025 Schedule</h1>
         <p>PROGRAMME SCHEDULE</p>
         <p className="italic" style={{ textDecoration: "none" }}>
-          GEOSYMBIOSIS SUMMER SCHOOL 2025
+          GEOSYMBIOTIC WORKSHOP 2025
         </p>
       </Link>
 

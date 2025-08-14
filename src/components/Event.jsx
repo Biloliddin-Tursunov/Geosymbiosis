@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function Event({ event, day, lang }) {
   // const dayDate = encodeURIComponent(day.date);
   // const timeRange = encodeURIComponent(event.time_range);
+  console.log(day);
 
   return (
     // /memories/${event.id}/${dayDate}/${timeRange}

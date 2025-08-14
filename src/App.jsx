@@ -3,10 +3,10 @@
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import { LangContext } from "./context/LangContext";
-import Schedule from "./component/Schedules";
+import Schedule from "./components/Schedules";
 import Memories from "./pages/Memories";
-import CreateMemory from "./component/CreateMemory";
-import Header from "./component/Header";
+import CreateMemory from "./components/CreateMemory";
+import Header from "./components/Header";
 import "./styles/style.css";
 
 export default function App() {

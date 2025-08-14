@@ -3,12 +3,13 @@
 import { Link } from "react-router-dom";
 
 export default function Event({ event, day, lang }) {
-  const dayDate = encodeURIComponent(day.date);
-  const timeRange = encodeURIComponent(event.time_range);
+  // const dayDate = encodeURIComponent(day.date);
+  // const timeRange = encodeURIComponent(event.time_range);
 
   return (
+    // /memories/${event.id}/${dayDate}/${timeRange}
     <Link
-      to={`/memories/${event.id}/${dayDate}/${timeRange}`}
+      to={`/`}
       className="event-link"
       style={{
         display: "block",

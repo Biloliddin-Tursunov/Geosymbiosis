@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { supabase } from "../supabaseClient";
 import { LangContext } from "../context/LangContext";
-import { LoginModal } from "../component/LoginModal";
-import Loading from "../component/Loading";
+import { LoginModal } from "../components/LoginModal";
+import Loading from "../components/Loading";
 
 export default function Memories() {
   const { eventId, dayDate, timeRange } = useParams();

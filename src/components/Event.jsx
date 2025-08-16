@@ -1,16 +1,8 @@
 /** @format */
 
-import { Link } from "react-router-dom";
-
-export default function Event({ event, day, lang }) {
-  // const dayDate = encodeURIComponent(day.date);
-  // const timeRange = encodeURIComponent(event.time_range);
-  console.log(day);
-
+export default function Event({ event, lang }) {
   return (
-    // /memories/${event.id}/${dayDate}/${timeRange}
-    <Link
-      to={`/`}
+    <div
       className="event-link"
       style={{
         display: "block",
@@ -20,9 +12,10 @@ export default function Event({ event, day, lang }) {
         borderRadius: "6px",
         textDecoration: "none",
         color: "#111",
+        backgroundColor: "white",
       }}>
       <div>{event[`activity_${lang}`]}</div>
       <div style={{ fontSize: "0.9em", color: "#666" }}>{event.time_range}</div>
-    </Link>
+    </div>
   );
 }

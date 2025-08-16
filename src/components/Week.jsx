@@ -1,8 +1,5 @@
 /** @format */
 
-// Week.jsx
-/** @format */
-
 import Day from "./Day";
 
 export default function Week({ week, lang }) {
@@ -13,7 +10,7 @@ export default function Week({ week, lang }) {
         {Object.values(week.days)
           .sort((a, b) => new Date(a.date) - new Date(b.date))
           .map((day) => (
-            <Day key={day.id} day={day} lang={lang} />
+            <Day key={day.id} day={day} week={week} lang={lang} />
           ))}
       </div>
     </section>

@@ -19,10 +19,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Schedule />} />
           <Route
-            path="/memories/:eventId/:dayDate/:timeRange"
+            path="/memories/:dayDate/:weekName/:dayName"
             element={<Memories />}
           />
-          <Route path="/create-memory/:eventId" element={<CreateMemory />} />
+          <Route path="/create-memory/:dayDate" element={<CreateMemory />} />
         </Routes>
       </div>
     </LangContext.Provider>

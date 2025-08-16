@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 
 export default function CreateMemory() {
-  const { eventId } = useParams();
+  const { dayDate } = useParams();
   const navigate = useNavigate();
 
   const [storyUz, setStoryUz] = useState("");
@@ -19,7 +19,7 @@ export default function CreateMemory() {
   };
 
   const uploadFileToR2 = async (file, filename) => {
-    // 1. Presigned URL olish uchun backendga so‘rov yuboramiz
+    // 1. Presigned URL olish uchun backendga so'rov yuboramiz
     const res = await fetch("/.netlify/functions/getPresignedUrl", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ export default function CreateMemory() {
 
     const { uploadUrl } = await res.json();
 
-    // 2. Faylni to‘g‘ridan-to‘g‘ri Cloudflare R2 ga yuklaymiz
+    // 2. Faylni to'g'ridan-to'g'ri Cloudflare R2 ga yuklaymiz
     const uploadRes = await fetch(uploadUrl, {
       method: "PUT",
       headers: {
@@ -56,7 +56,7 @@ export default function CreateMemory() {
       const uploadedUrls = [];
 
       for (const file of files) {
-        const filename = `${eventId}/${Date.now()}-${file.name}`;
+        const filename = `${dayDate}/${Date.now()}-${file.name}`;
         const url = await uploadFileToR2(file, filename);
         uploadedUrls.push(url);
       }
@@ -64,7 +64,7 @@ export default function CreateMemory() {
       // Supabase jadvalga yozish
       const { error: insertError } = await supabase.from("memories").insert([
         {
-          event_id: parseInt(eventId, 10),
+          day_date: decodeURIComponent(dayDate),
           story_text_uz: storyUz || null,
           story_text_en: storyEn || null,
           story_text_ru: storyRu || null,
@@ -86,35 +86,129 @@ export default function CreateMemory() {
 
   return (
     <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
-      <h1>Create Memory</h1>
+      <h1
+        style={{ textAlign: "center", marginBottom: "30px", color: "#1f2937" }}>
+        Create Memory
+      </h1>
       <form onSubmit={handleSubmit}>
-        <label>Story (Uzbek)</label>
-        <textarea
-          value={storyUz}
-          onChange={(e) => setStoryUz(e.target.value)}
-          style={{ width: "100%", minHeight: 100, marginBottom: 15 }}
-        />
-        <label>Story (English)</label>
-        <textarea
-          value={storyEn}
-          onChange={(e) => setStoryEn(e.target.value)}
-          style={{ width: "100%", minHeight: 100, marginBottom: 15 }}
-        />
-        <label>Story (Russian)</label>
-        <textarea
-          value={storyRu}
-          onChange={(e) => setStoryRu(e.target.value)}
-          style={{ width: "100%", minHeight: 100, marginBottom: 15 }}
-        />
-        <label>Upload images/videos</label>
-        <input
-          type="file"
-          multiple
-          onChange={handleFileChange}
-          accept="image/*,video/*"
-          style={{ width: "100%", marginBottom: 20 }}
-        />
-        <button type="submit" disabled={loading}>
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "500",
+              color: "#374151",
+            }}>
+            Story (O'zbek)
+          </label>
+          <textarea
+            value={storyUz}
+            onChange={(e) => setStoryUz(e.target.value)}
+            style={{
+              width: "100%",
+              minHeight: 100,
+              padding: "12px",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontFamily: "inherit",
+            }}
+            placeholder="O'zbek tilida xotirangizni yozing..."
+          />
+        </div>
+
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "500",
+              color: "#374151",
+            }}>
+            Story (English)
+          </label>
+          <textarea
+            value={storyEn}
+            onChange={(e) => setStoryEn(e.target.value)}
+            style={{
+              width: "100%",
+              minHeight: 100,
+              padding: "12px",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontFamily: "inherit",
+            }}
+            placeholder="Write your memory in English..."
+          />
+        </div>
+
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "500",
+              color: "#374151",
+            }}>
+            Story (Русский)
+          </label>
+          <textarea
+            value={storyRu}
+            onChange={(e) => setStoryRu(e.target.value)}
+            style={{
+              width: "100%",
+              minHeight: 100,
+              padding: "12px",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontFamily: "inherit",
+            }}
+            placeholder="Напишите вашу память на русском..."
+          />
+        </div>
+
+        <div style={{ marginBottom: "30px" }}>
+          <label
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "500",
+              color: "#374151",
+            }}>
+            Upload Images/Videos
+          </label>
+          <input
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            accept="image/*,video/*"
+            style={{
+              width: "100%",
+              padding: "12px",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              fontSize: "14px",
+            }}
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: "100%",
+            padding: "12px 20px",
+            backgroundColor: loading ? "#9ca3af" : "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "500",
+            cursor: loading ? "not-allowed" : "pointer",
+            transition: "background-color 0.2s",
+          }}>
           {loading ? "Saving..." : "Save Memory"}
         </button>
       </form>

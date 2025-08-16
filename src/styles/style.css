@@ -31,15 +31,23 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
   margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-height: 100px;
 }
 
 .logos img {
-  height: 80px;
+  height: 150px;
   width: auto;
   object-fit: contain;
+  max-width: 150px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.logos img:hover {
+  transform: scale(1.05);
 }
 
 .header h1 {
@@ -522,6 +530,133 @@ body {
   color: #374151;
 }
 
+/* Create Memory page styles */
+.create-memory-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.create-memory-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  color: #1f2937;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-memory-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.create-memory-header p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* Create Memory form styles */
+.create-memory-form {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.form-group textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 1.5;
+  color: #374151;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  resize: vertical;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #f9fafb;
+  color: #374151;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-group input[type="file"]:not(:disabled) {
+  background-color: #ffffff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.file-upload-note {
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.create-memory-submit {
+  width: 100%;
+  padding: 14px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 1rem;
+}
+
+.create-memory-submit:hover:not(:disabled) {
+  background-color: #0056b3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-memory-submit:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   /* Header adjustments */
@@ -535,11 +670,14 @@ body {
   }
 
   .logos {
-    gap: 1rem;
+    gap: 2rem;
+    min-height: 80px;
+    flex-wrap: nowrap;
   }
 
   .logos img {
-    height: 45px;
+    height: 70px;
+    max-width: 120px;
   }
 
   .lang-switch {
@@ -648,6 +786,38 @@ body {
   .modal-content {
     padding: 1.5rem;
   }
+
+  /* Create Memory mobile adjustments */
+  .create-memory-page {
+    padding: 1rem;
+  }
+
+  .create-memory-header {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .create-memory-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .create-memory-form {
+    padding: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group textarea {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .create-memory-submit {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -661,8 +831,15 @@ body {
   }
 
   .logos {
-    flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    min-height: 60px;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+
+  .logos img {
+    height: 100px;
+    max-width: 100px;
   }
 
   .day {
@@ -697,5 +874,22 @@ body {
 
   .media-item {
     height: 120px;
+  }
+
+  /* Create Memory extra small screens */
+  .create-memory-header {
+    padding: 1.25rem;
+  }
+
+  .create-memory-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .create-memory-form {
+    padding: 1.25rem;
+  }
+
+  .form-group textarea {
+    min-height: 80px;
   }
 }
